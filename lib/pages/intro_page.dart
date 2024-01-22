@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cool_app/components/button.dart';
+import 'package:cool_app/components/title.dart';
 
 class IntroPage extends StatelessWidget {
   const IntroPage({super.key});
@@ -17,16 +18,10 @@ class IntroPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             // Espacement horizontal
-            const SizedBox(height: 15),
+            const SizedBox(height: 10),
 
-            // Titre de l'App
-            Text(
-              "Adopt a Zombie",
-              style: GoogleFonts.creepster(
-                fontSize: 50,
-                color: const Color.fromARGB(255, 139, 23, 0),
-              ),
-            ),
+            // Titre de l'App - component "title"
+            const CreepText(text: "Adopt a Zombie !", fontSize: 70),
 
             const SizedBox(height: 10),
 
@@ -42,14 +37,10 @@ class IntroPage extends StatelessWidget {
             ),
 
             // Texte d'intro
-            Text(
-              "Find the perfect soulmate from under the grave !",
-              textAlign: TextAlign.center,
-              style: GoogleFonts.creepster(
-                fontSize: 30,
-                color: const Color.fromARGB(255, 139, 23, 0),
-              ),
-            ),
+            const CreepText(
+                alignment: TextAlign.center,
+                text: "find the perfect soulmate from under the grave...",
+                fontSize: 30),
 
             const SizedBox(height: 10),
 

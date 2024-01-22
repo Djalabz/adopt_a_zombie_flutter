@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 // import 'package:http/http.dart' as http;
-import 'package:google_fonts/google_fonts.dart';
 import 'package:cool_app/components/button.dart';
+import 'package:cool_app/components/title.dart';
 
 class SignupPage extends StatelessWidget {
   final signup = GlobalKey<FormState>();
@@ -28,15 +28,8 @@ class SignupPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // Titre du Signup
-              Text(
-                "Signup",
-                style: GoogleFonts.creepster(
-                  fontSize: 50,
-                  color: const Color.fromARGB(255, 139, 23, 0),
-                  decoration: TextDecoration.none,
-                ),
-              ),
+              // Titre du Signup - component "title"
+              const CreepText(text: "Signup", fontSize: 60),
 
               // Espacement horizontal
               const SizedBox(height: 40),

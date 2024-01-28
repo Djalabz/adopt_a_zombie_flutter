@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-// import 'package:http/http.dart' as http;
 import 'package:cool_app/components/button.dart';
 import 'package:cool_app/components/title.dart';
+import 'package:http/http.dart' as http;
 
 class SignupPage extends StatelessWidget {
-  final signup = GlobalKey<FormState>();
+  final signupKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -13,12 +13,32 @@ class SignupPage extends StatelessWidget {
   // cette ligne est nécessaire pour que le widget puisse être construit
   SignupPage({super.key});
 
+  // Future<void> signup() async {
+  //   final response = await http.post(
+  //     Uri.parse('https://localhost:3000/signup'),
+  //     headers: <String, String>{
+  //       'Content-Type': 'application/json; charset=UTF-8',
+  //     },
+  //     body: jsonEncode(<String, String>{
+  //       'name': _nameController.text,
+  //       'email': _emailController.text,
+  //       'password': _passwordController.text,
+  //       'confirmPassword': _confirmPasswordController.text,
+  //     }),
+  //   );
+  //   if (response.statusCode == 200) {
+  //     Navigator.pushNamed(context, '/profile');
+  //   } else {
+  //     throw Exception('Failed to signup');
+  //   }
+  // }
+
   // override signifie que la méthode de la classe parente est remplacée
   @override
   // build est une méthode qui retourne un widget (ici un Scaffold)
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 255, 211, 194),
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: Center(
         // Container qui contient le formulaire de Signup
         child: Container(
@@ -36,9 +56,9 @@ class SignupPage extends StatelessWidget {
 
               // Formulaire de Signup
               Material(
-                color: const Color.fromARGB(255, 255, 211, 194),
+                color: Theme.of(context).colorScheme.secondary,
                 child: Form(
-                  key: signup,
+                  key: signupKey,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -49,19 +69,19 @@ class SignupPage extends StatelessWidget {
                         // Input pour le nom
                         child: TextFormField(
                           controller: _nameController,
-                          cursorColor: const Color.fromARGB(255, 139, 23, 0),
-                          style: const TextStyle(
-                              color: Color.fromARGB(255, 139, 23, 0)),
+                          cursorColor: Theme.of(context).colorScheme.primary,
+                          style: TextStyle(
+                              color: Theme.of(context).colorScheme.primary),
 
                           // Style de l'input
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             labelText: 'Name',
                             focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                                  color: Color.fromARGB(255, 139, 23, 0)),
+                                  color: Theme.of(context).colorScheme.primary),
                             ),
                             floatingLabelStyle: TextStyle(
-                                color: Color.fromARGB(255, 139, 23, 0)),
+                                color: Theme.of(context).colorScheme.primary),
                           ),
 
                           // Le validator vérifie que le champ n'est pas vide
@@ -79,17 +99,17 @@ class SignupPage extends StatelessWidget {
                         width: double.infinity,
                         child: TextFormField(
                           controller: _emailController,
-                          cursorColor: const Color.fromARGB(255, 139, 23, 0),
-                          style: const TextStyle(
-                              color: Color.fromARGB(255, 139, 23, 0)),
-                          decoration: const InputDecoration(
+                          cursorColor: Theme.of(context).colorScheme.primary,
+                          style: TextStyle(
+                              color: Theme.of(context).colorScheme.primary),
+                          decoration: InputDecoration(
                             labelText: 'Email',
                             focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                                  color: Color.fromARGB(255, 139, 23, 0)),
+                                  color: Theme.of(context).colorScheme.primary),
                             ),
                             floatingLabelStyle: TextStyle(
-                                color: Color.fromARGB(255, 139, 23, 0)),
+                                color: Theme.of(context).colorScheme.primary),
                           ),
                           validator: (value) {
                             if (value!.isEmpty) {

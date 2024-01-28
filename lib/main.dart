@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'pages/intro_page.dart';
 import 'pages/signup_page.dart';
 import 'pages/profile_page.dart';
+import 'theme/light_mode.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         // On retire la bannière de debug
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(fontFamily: 'Creepster'),
+        theme: lightMode,
         // On définit la page d'intro comme page d'accueil
         home: const IntroPage(),
         // On définit les routes de l'application

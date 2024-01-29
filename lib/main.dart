@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
         home: const IntroPage(),
         // On définit les routes de l'application
         routes: {
-          '/signup': (context) => SignupPage(),
+          '/signup': (context) => SignupForm(),
           '/profile': (context) => ProfilePage(),
           // '/login': (context) => LoginPage(),
           // '/projects': (context) => ProjectsPage(),

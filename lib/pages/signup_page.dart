@@ -2,36 +2,60 @@ import 'package:flutter/material.dart';
 import 'package:cool_app/components/button.dart';
 import 'package:cool_app/components/title.dart';
 import 'package:http/http.dart' as http;
+import 'dart:convert';
 
-class SignupPage extends StatelessWidget {
+class SignupForm extends StatefulWidget {
+  const SignupForm({Key? key}) : super(key: key);
+
+  @override
+  SignupFormState createState() => SignupFormState();
+}
+
+class SignupFormState extends State<SignupForm> {
   final signupKey = GlobalKey<FormState>();
-  final _nameController = TextEditingController();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final _confirmPasswordController = TextEditingController();
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
 
   // cette ligne est nécessaire pour que le widget puisse être construit
-  SignupPage({super.key});
+  // _SignupFormState({super.key});
 
-  // Future<void> signup() async {
-  //   final response = await http.post(
-  //     Uri.parse('https://localhost:3000/signup'),
-  //     headers: <String, String>{
-  //       'Content-Type': 'application/json; charset=UTF-8',
-  //     },
-  //     body: jsonEncode(<String, String>{
-  //       'name': _nameController.text,
-  //       'email': _emailController.text,
-  //       'password': _passwordController.text,
-  //       'confirmPassword': _confirmPasswordController.text,
-  //     }),
-  //   );
-  //   if (response.statusCode == 200) {
-  //     Navigator.pushNamed(context, '/profile');
-  //   } else {
-  //     throw Exception('Failed to signup');
-  //   }
-  // }
+  Future<void> registerUser() async {
+    // On vérifie que les deux mots de passe sont identiques
+    if (passwordController.text != confirmPasswordController.text) {
+      return;
+    } else {
+      // On vérifie que le formulaire est valide
+      if (signupKey.currentState!.validate()) {
+        try {
+          // On envoie les données au serveur
+          final response = await http.post(
+            Uri.http('localhost:3000', 'users/signup'),
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: jsonEncode({
+              'name': nameController.text,
+              'email': emailController.text,
+              'password': passwordController.text,
+              'confirmPassword': confirmPasswordController.text,
+            }),
+          );
+
+          if (response.statusCode == 200) {
+            print(response.body);
+            // Handle successful signup, e.g., navigate to the profile page
+            // Navigator.pushNamed(context, '/profile');
+          }
+        } catch (error) {
+          print('Error making HTTP request: $error');
+        }
+      } else {
+        print('Form is invalid');
+      }
+    }
+  }
 
   // override signifie que la méthode de la classe parente est remplacée
   @override
@@ -68,7 +92,7 @@ class SignupPage extends StatelessWidget {
 
                         // Input pour le nom
                         child: TextFormField(
-                          controller: _nameController,
+                          controller: nameController,
                           cursorColor: Theme.of(context).colorScheme.primary,
                           style: TextStyle(
                               color: Theme.of(context).colorScheme.primary),
@@ -98,7 +122,7 @@ class SignupPage extends StatelessWidget {
                       SizedBox(
                         width: double.infinity,
                         child: TextFormField(
-                          controller: _emailController,
+                          controller: emailController,
                           cursorColor: Theme.of(context).colorScheme.primary,
                           style: TextStyle(
                               color: Theme.of(context).colorScheme.primary),
@@ -124,7 +148,7 @@ class SignupPage extends StatelessWidget {
                       SizedBox(
                         width: double.infinity,
                         child: TextFormField(
-                          controller: _passwordController,
+                          controller: passwordController,
                           cursorColor: const Color.fromARGB(255, 139, 23, 0),
                           style: const TextStyle(
                               color: Color.fromARGB(255, 139, 23, 0)),
@@ -151,7 +175,7 @@ class SignupPage extends StatelessWidget {
                       SizedBox(
                         width: double.infinity,
                         child: TextFormField(
-                          controller: _confirmPasswordController,
+                          controller: confirmPasswordController,
                           cursorColor: const Color.fromARGB(255, 139, 23, 0),
                           style: const TextStyle(
                               color: Color.fromARGB(255, 139, 23, 0)),
@@ -182,7 +206,7 @@ class SignupPage extends StatelessWidget {
                         child: MyButton(
                           text: "Signup now",
                           onPressed: () {
-                            Navigator.pushNamed(context, '/');
+                            registerUser();
                           },
                         ),
                       ),

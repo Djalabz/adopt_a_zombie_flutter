@@ -1,6 +1,6 @@
-# cool_app
+# zombie_app
 
-A new Flutter project.
+A new Flutter project. It's about zombies.
 
 ## Getting Started
 

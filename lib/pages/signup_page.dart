@@ -1,24 +1,63 @@
+import 'package:cool_app/components/text_form_field.dart';
 import 'package:flutter/material.dart';
-// import 'package:http/http.dart' as http;
-import 'package:google_fonts/google_fonts.dart';
 import 'package:cool_app/components/button.dart';
+import 'package:cool_app/components/title.dart';
+import 'package:cool_app/components/text_form_field.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
-class SignupPage extends StatelessWidget {
-  final signup = GlobalKey<FormState>();
-  final _nameController = TextEditingController();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final _confirmPasswordController = TextEditingController();
+class SignupForm extends StatelessWidget {
+  final signupKey = GlobalKey<FormState>();
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
 
   // cette ligne est nécessaire pour que le widget puisse être construit
-  SignupPage({super.key});
+  SignupForm({super.key});
+
+  Future<void> registerUser() async {
+    // On vérifie que les deux mots de passe sont identiques
+    if (passwordController.text != confirmPasswordController.text) {
+      return;
+    } else {
+      // On vérifie que le formulaire est valide
+      if (signupKey.currentState!.validate()) {
+        try {
+          // On envoie les données au serveur
+          final response = await http.post(
+            Uri.http('localhost:3000', 'users/signup'),
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: jsonEncode({
+              'name': nameController.text,
+              'email': emailController.text,
+              'password': passwordController.text,
+              'confirmPassword': confirmPasswordController.text,
+            }),
+          );
+
+          if (response.statusCode == 200) {
+            print(response.body);
+            // Handle successful signup, e.g., navigate to the profile page
+            // Navigator.pushNamed(context, '/profile');
+          }
+        } catch (error) {
+          print('Error making HTTP request: $error');
+        }
+      } else {
+        print('Form is invalid');
+      }
+    }
+  }
 
   // override signifie que la méthode de la classe parente est remplacée
   @override
   // build est une méthode qui retourne un widget (ici un Scaffold)
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 255, 211, 194),
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: Center(
         // Container qui contient le formulaire de Signup
         child: Container(
@@ -28,24 +67,17 @@ class SignupPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // Titre du Signup
-              Text(
-                "Signup",
-                style: GoogleFonts.creepster(
-                  fontSize: 50,
-                  color: const Color.fromARGB(255, 139, 23, 0),
-                  decoration: TextDecoration.none,
-                ),
-              ),
+              // Titre du Signup - component "title"
+              const CreepText(text: "Signup", fontSize: 60),
 
               // Espacement horizontal
               const SizedBox(height: 40),
 
               // Formulaire de Signup
               Material(
-                color: const Color.fromARGB(255, 255, 211, 194),
+                color: Theme.of(context).colorScheme.secondary,
                 child: Form(
-                  key: signup,
+                  key: signupKey,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -54,110 +86,42 @@ class SignupPage extends StatelessWidget {
                         width: double.infinity,
 
                         // Input pour le nom
-                        child: TextFormField(
-                          controller: _nameController,
-                          cursorColor: const Color.fromARGB(255, 139, 23, 0),
-                          style: const TextStyle(
-                              color: Color.fromARGB(255, 139, 23, 0)),
-
-                          // Style de l'input
-                          decoration: const InputDecoration(
-                            labelText: 'Name',
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Color.fromARGB(255, 139, 23, 0)),
-                            ),
-                            floatingLabelStyle: TextStyle(
-                                color: Color.fromARGB(255, 139, 23, 0)),
-                          ),
-
-                          // Le validator vérifie que le champ n'est pas vide
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Please enter your name';
-                            }
-                            return null;
-                          },
+                        child: MyTextFormField(
+                          controller: nameController,
+                          labelText: 'Name',
+                          error: 'Please enter your name',
                         ),
                       ),
 
                       // Espacement horizontal
                       SizedBox(
                         width: double.infinity,
-                        child: TextFormField(
-                          controller: _emailController,
-                          cursorColor: const Color.fromARGB(255, 139, 23, 0),
-                          style: const TextStyle(
-                              color: Color.fromARGB(255, 139, 23, 0)),
-                          decoration: const InputDecoration(
-                            labelText: 'Email',
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Color.fromARGB(255, 139, 23, 0)),
-                            ),
-                            floatingLabelStyle: TextStyle(
-                                color: Color.fromARGB(255, 139, 23, 0)),
-                          ),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Please enter your email';
-                            }
-                            return null;
-                          },
+                        child: MyTextFormField(
+                          controller: emailController,
+                          labelText: 'Email',
+                          error: 'Please enter your email adress',
                         ),
                       ),
 
                       // Espacement horizontal
                       SizedBox(
                         width: double.infinity,
-                        child: TextFormField(
-                          controller: _passwordController,
-                          cursorColor: const Color.fromARGB(255, 139, 23, 0),
-                          style: const TextStyle(
-                              color: Color.fromARGB(255, 139, 23, 0)),
-                          decoration: const InputDecoration(
-                            labelText: 'Password',
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Color.fromARGB(255, 139, 23, 0)),
-                            ),
-                            floatingLabelStyle: TextStyle(
-                                color: Color.fromARGB(255, 139, 23, 0)),
-                          ),
-                          obscureText: true,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Please enter a password';
-                            }
-                            return null;
-                          },
+                        child: MyTextFormField(
+                          controller: passwordController,
+                          labelText: 'Password',
+                          error: 'Please enter a password',
+                          hidden: true,
                         ),
                       ),
 
                       // Espacement horizontal
                       SizedBox(
                         width: double.infinity,
-                        child: TextFormField(
-                          controller: _confirmPasswordController,
-                          cursorColor: const Color.fromARGB(255, 139, 23, 0),
-                          style: const TextStyle(
-                              color: Color.fromARGB(255, 139, 23, 0)),
-                          decoration: const InputDecoration(
-                            labelText: 'Confirm Password',
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Color.fromARGB(255, 139, 23, 0)),
-                            ),
-                            floatingLabelStyle: TextStyle(
-                                color: Color.fromARGB(255, 139, 23, 0)),
-                          ),
-                          obscureText: true,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Please confirm your password';
-                            }
-                            return null;
-                          },
+                        child: MyTextFormField(
+                          controller: confirmPasswordController,
+                          labelText: 'Confirm Password',
+                          error: 'Please confirm your password',
+                          hidden: true,
                         ),
                       ),
 
@@ -169,7 +133,7 @@ class SignupPage extends StatelessWidget {
                         child: MyButton(
                           text: "Signup now",
                           onPressed: () {
-                            Navigator.pushNamed(context, '/');
+                            registerUser();
                           },
                         ),
                       ),

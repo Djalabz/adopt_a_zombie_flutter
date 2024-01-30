@@ -2,11 +2,10 @@ import 'package:cool_app/components/text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:cool_app/components/button.dart';
 import 'package:cool_app/components/title.dart';
-import 'package:cool_app/components/text_form_field.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class SignupForm extends StatelessWidget {
+class SignupPage extends StatelessWidget {
   final signupKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
   final emailController = TextEditingController();
@@ -14,8 +13,10 @@ class SignupForm extends StatelessWidget {
   final confirmPasswordController = TextEditingController();
 
   // cette ligne est nécessaire pour que le widget puisse être construit
-  SignupForm({super.key});
+  // super.key est une propriété de la classe parente qui permet de définir une clé afin d'identifier le widget
+  SignupPage({super.key});
 
+  // Fonction registerUser qui envoie les données du formulaire à l'API
   Future<void> registerUser() async {
     // On vérifie que les deux mots de passe sont identiques
     if (passwordController.text != confirmPasswordController.text) {

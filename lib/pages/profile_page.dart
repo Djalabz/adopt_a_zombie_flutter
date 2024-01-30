@@ -31,30 +31,6 @@ class ProfilePage extends StatelessWidget {
               // Titre pour ma page de profile
               const CreepText(text: "Profile", fontSize: 50),
 
-              // const Image(
-              //   image: AssetImage('lib/images/zombie.png'),
-              //   width: 100,
-              //   height: 100,
-              // ),
-
-              // SliverAppBar(
-              //   expandedHeight: 200.0,
-              //   floating: false,
-              //   pinned: true,
-              //   flexibleSpace: FlexibleSpaceBar(
-              //     centerTitle: true,
-              //     title: const Text("Collapsing Toolbar",
-              //         style: TextStyle(
-              //           color: Colors.white,
-              //           fontSize: 16.0,
-              //         )),
-              //     background: Image.network(
-              //       "https://images.unsplash.com/photo-1612835362597-4b7b7b0b4b0b?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8em9tYmllJTIwc2hvcHBpbmd8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80",
-              //       fit: BoxFit.cover,
-              //     ),
-              //   ),
-              // ),
-
               // Image de mon zombie
               const SizedBox(height: 10),
 

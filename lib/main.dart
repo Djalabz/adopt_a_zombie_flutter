@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'pages/intro_page.dart';
 import 'pages/signup_page.dart';
+import 'pages/login_page.dart';
 import 'pages/profile_page.dart';
 import 'theme/light_mode.dart';
 
@@ -22,8 +23,8 @@ class MyApp extends StatelessWidget {
         // On définit les routes de l'application
         routes: {
           '/signup': (context) => SignupPage(),
-          '/profile': (context) => ProfilePage(),
-          // '/login': (context) => LoginPage(),
+          '/profile': (context) => const ProfilePage(),
+          '/login': (context) => LoginPage(),
           // '/projects': (context) => ProjectsPage(),
           // '/project': (context) => ProjectPage(),
           // '/project/edit': (context) => EditProjectPage(),

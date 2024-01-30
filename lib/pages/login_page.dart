@@ -55,7 +55,7 @@ class LoginPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               // Titre du login - component "title"
-              const CreepText(text: "login", fontSize: 60),
+              const CreepText(text: "Login", fontSize: 60),
 
               // Espacement horizontal
               const SizedBox(height: 40),
@@ -95,7 +95,7 @@ class LoginPage extends StatelessWidget {
                       // Bouton de login
                       SizedBox(
                         child: MyButton(
-                          text: "login now",
+                          text: "login",
                           onPressed: () {
                             loginUser();
                           },

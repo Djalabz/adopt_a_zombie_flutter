@@ -1,17 +1,12 @@
+import 'package:cool_app/components/text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:cool_app/components/button.dart';
 import 'package:cool_app/components/title.dart';
+import 'package:cool_app/components/text_form_field.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class SignupForm extends StatefulWidget {
-  const SignupForm({Key? key}) : super(key: key);
-
-  @override
-  SignupFormState createState() => SignupFormState();
-}
-
-class SignupFormState extends State<SignupForm> {
+class SignupForm extends StatelessWidget {
   final signupKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
   final emailController = TextEditingController();
@@ -19,7 +14,7 @@ class SignupFormState extends State<SignupForm> {
   final confirmPasswordController = TextEditingController();
 
   // cette ligne est nécessaire pour que le widget puisse être construit
-  // _SignupFormState({super.key});
+  SignupForm({super.key});
 
   Future<void> registerUser() async {
     // On vérifie que les deux mots de passe sont identiques
@@ -91,110 +86,42 @@ class SignupFormState extends State<SignupForm> {
                         width: double.infinity,
 
                         // Input pour le nom
-                        child: TextFormField(
+                        child: MyTextFormField(
                           controller: nameController,
-                          cursorColor: Theme.of(context).colorScheme.primary,
-                          style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary),
-
-                          // Style de l'input
-                          decoration: InputDecoration(
-                            labelText: 'Name',
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Theme.of(context).colorScheme.primary),
-                            ),
-                            floatingLabelStyle: TextStyle(
-                                color: Theme.of(context).colorScheme.primary),
-                          ),
-
-                          // Le validator vérifie que le champ n'est pas vide
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Please enter your name';
-                            }
-                            return null;
-                          },
+                          labelText: 'Name',
+                          error: 'Please enter your name',
                         ),
                       ),
 
                       // Espacement horizontal
                       SizedBox(
                         width: double.infinity,
-                        child: TextFormField(
+                        child: MyTextFormField(
                           controller: emailController,
-                          cursorColor: Theme.of(context).colorScheme.primary,
-                          style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary),
-                          decoration: InputDecoration(
-                            labelText: 'Email',
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Theme.of(context).colorScheme.primary),
-                            ),
-                            floatingLabelStyle: TextStyle(
-                                color: Theme.of(context).colorScheme.primary),
-                          ),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Please enter your email';
-                            }
-                            return null;
-                          },
+                          labelText: 'Email',
+                          error: 'Please enter your email adress',
                         ),
                       ),
 
                       // Espacement horizontal
                       SizedBox(
                         width: double.infinity,
-                        child: TextFormField(
+                        child: MyTextFormField(
                           controller: passwordController,
-                          cursorColor: const Color.fromARGB(255, 139, 23, 0),
-                          style: const TextStyle(
-                              color: Color.fromARGB(255, 139, 23, 0)),
-                          decoration: const InputDecoration(
-                            labelText: 'Password',
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Color.fromARGB(255, 139, 23, 0)),
-                            ),
-                            floatingLabelStyle: TextStyle(
-                                color: Color.fromARGB(255, 139, 23, 0)),
-                          ),
-                          obscureText: true,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Please enter a password';
-                            }
-                            return null;
-                          },
+                          labelText: 'Password',
+                          error: 'Please enter a password',
+                          hidden: true,
                         ),
                       ),
 
                       // Espacement horizontal
                       SizedBox(
                         width: double.infinity,
-                        child: TextFormField(
+                        child: MyTextFormField(
                           controller: confirmPasswordController,
-                          cursorColor: const Color.fromARGB(255, 139, 23, 0),
-                          style: const TextStyle(
-                              color: Color.fromARGB(255, 139, 23, 0)),
-                          decoration: const InputDecoration(
-                            labelText: 'Confirm Password',
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Color.fromARGB(255, 139, 23, 0)),
-                            ),
-                            floatingLabelStyle: TextStyle(
-                                color: Color.fromARGB(255, 139, 23, 0)),
-                          ),
-                          obscureText: true,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Please confirm your password';
-                            }
-                            return null;
-                          },
+                          labelText: 'Confirm Password',
+                          error: 'Please confirm your password',
+                          hidden: true,
                         ),
                       ),
 

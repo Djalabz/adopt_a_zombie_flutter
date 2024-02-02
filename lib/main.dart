@@ -3,6 +3,7 @@ import 'pages/intro_page.dart';
 import 'pages/signup_page.dart';
 import 'pages/login_page.dart';
 import 'pages/profile_page.dart';
+import 'pages/api_page.dart';
 import 'theme/light_mode.dart';
 
 void main() {
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
           '/signup': (context) => SignupPage(),
           '/profile': (context) => const ProfilePage(),
           '/login': (context) => LoginPage(),
+          '/api': (context) => const ApiPage(),
           // '/projects': (context) => ProjectsPage(),
           // '/project': (context) => ProjectPage(),
           // '/project/edit': (context) => EditProjectPage(),

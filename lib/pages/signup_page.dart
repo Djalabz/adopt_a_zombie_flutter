@@ -17,7 +17,7 @@ class SignupPage extends StatelessWidget {
   SignupPage({super.key});
 
   // Fonction registerUser qui envoie les données du formulaire à l'API
-  Future<void> registerUser() async {
+  Future<dynamic> registerUser() async {
     // On vérifie que les deux mots de passe sont identiques
     if (passwordController.text != confirmPasswordController.text) {
       return;
@@ -40,7 +40,7 @@ class SignupPage extends StatelessWidget {
           );
 
           if (response.statusCode == 200) {
-            print(response.body);
+            // return jsonDecode(response.body) as Map;
             // Handle successful signup, e.g., navigate to the profile page
             // Navigator.pushNamed(context, '/profile');
           }

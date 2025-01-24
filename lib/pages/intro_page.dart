@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:cool_app/components/button.dart';
 import 'package:cool_app/components/title.dart';
+import 'package:lottie/lottie.dart';
 
 class IntroPage extends StatelessWidget {
   const IntroPage({super.key});
@@ -48,6 +49,13 @@ class IntroPage extends StatelessWidget {
                 text: "Let's go !",
                 onPressed: () {
                   Navigator.pushNamed(context, '/signup');
+                }),
+
+            
+            MyButton(
+                text: "API here",
+                onPressed: () {
+                  Navigator.pushNamed(context, '/api');
                 })
           ],
         ),

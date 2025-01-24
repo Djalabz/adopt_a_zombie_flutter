@@ -23,7 +23,7 @@ class MyTextFormField extends StatelessWidget {
 
       // Style de l'input
       decoration: InputDecoration(
-        labelText: 'Name',
+        labelText: labelText,
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: Theme.of(context).colorScheme.primary),
         ),

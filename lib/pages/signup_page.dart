@@ -2,7 +2,6 @@ import 'package:cool_app/components/text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:cool_app/components/button.dart';
 import 'package:cool_app/components/title.dart';
-import 'package:cool_app/components/text_form_field.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -21,10 +20,10 @@ class SignupForm extends StatelessWidget {
     if (passwordController.text != confirmPasswordController.text) {
       return;
     } else {
-      // On vérifie que le formulaire est valide
+      // On vérifie que le formulaire est bien valide
       if (signupKey.currentState!.validate()) {
         try {
-          // On envoie les données au serveur
+          // On envoit les données au serveur
           final response = await http.post(
             Uri.http('localhost:3000', 'users/signup'),
             headers: {
@@ -40,7 +39,7 @@ class SignupForm extends StatelessWidget {
 
           if (response.statusCode == 200) {
             print(response.body);
-            // Handle successful signup, e.g., navigate to the profile page
+            // Signup = succès
             // Navigator.pushNamed(context, '/profile');
           }
         } catch (error) {
@@ -57,7 +56,7 @@ class SignupForm extends StatelessWidget {
   // build est une méthode qui retourne un widget (ici un Scaffold)
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.secondary,
       body: Center(
         // Container qui contient le formulaire de Signup
         child: Container(

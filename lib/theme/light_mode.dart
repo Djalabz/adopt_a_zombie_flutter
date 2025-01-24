@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 ThemeData lightMode = ThemeData(
   colorScheme: const ColorScheme.light(
-    background: Color.fromARGB(255, 255, 211, 194),
+    surface: Color.fromARGB(255, 255, 211, 194),
     brightness: Brightness.light,
     primary: Color.fromARGB(255, 139, 23, 0),
     secondary: Color.fromARGB(255, 255, 211, 194),

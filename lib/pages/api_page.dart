@@ -20,20 +20,22 @@ class RandomUserScreen extends StatefulWidget {
   RandomUserScreenState createState() => RandomUserScreenState();
 }
 
-
 class RandomUserScreenState extends State<RandomUserScreen> {
   List<dynamic> users = [];
 
   // Fonction pour récupérer les données via l'API
   Future<void> fetchRandomUsers() async {
-    final url = Uri.parse('https://randomuser.me/api/?results=10'); // Récupère 10 utilisateurs
+    final url = Uri.parse(
+        'https://jsonplaceholder.typicode.com/users'); // Récupère 10 utilisateurs
+    // final url = Uri.parse('https://randomuser.me/api/?results=10'); // Récupère 10 utilisateurs
     try {
       final response = await http.get(url);
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         setState(() {
-          users = data['results']; // Met à jour la liste des utilisateurs
+          // JSONPlaceholder renvoie un tableau directement (pas de clé 'results')
+          users = data is List ? data : (data['results'] ?? []);
         });
       } else {
         throw Exception('Erreur de chargement des users');
@@ -42,7 +44,8 @@ class RandomUserScreenState extends State<RandomUserScreen> {
       print('Erreur: $e');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Erreur lors du chargement des données')),
+          const SnackBar(
+              content: Text('Erreur lors du chargement des données')),
         );
       }
     }
@@ -57,11 +60,11 @@ class RandomUserScreenState extends State<RandomUserScreen> {
           style: TextStyle(color: Theme.of(context).colorScheme.secondary),
         ),
       ),
-
       body: Column(
         children: [
           ElevatedButton(
-            onPressed: fetchRandomUsers, // Bouton pour déclencher la requête API
+            onPressed:
+                fetchRandomUsers, // Bouton pour déclencher la requête API
             child: const Text('Charger les profils de l\'API'),
           ),
           Expanded(
@@ -71,15 +74,30 @@ class RandomUserScreenState extends State<RandomUserScreen> {
                     itemCount: users.length,
                     itemBuilder: (context, index) {
                       final user = users[index];
-                      final name = '${user['name']['first']} ${user['name']['last']}';
-                      final email = user['email'];
-                      final imageUrl = user['picture']['large'];
+                      // JSONPlaceholder : name est une string, pas de picture
+                      final name = user['name'] is Map
+                          ? '${user['name']['first']} ${user['name']['last']}'
+                          : (user['name'] ?? '');
+                      final email = user['email'] ?? '';
+                      final imageUrl = user['picture']?['large'] as String?;
 
                       return ListTile(
                         leading: CircleAvatar(
-                          backgroundImage: NetworkImage(imageUrl),
+                          backgroundColor: imageUrl == null
+                              ? Theme.of(context).colorScheme.primaryContainer
+                              : null,
+                          backgroundImage:
+                              imageUrl != null ? NetworkImage(imageUrl) : null,
+                          child: imageUrl == null
+                              ? Text((name.isNotEmpty ? name[0] : '?'),
+                                  style: TextStyle(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onPrimaryContainer))
+                              : null,
                         ),
-                        title: Text(name, 
+                        title: Text(
+                          name,
                           style: TextStyle(
                             color: Theme.of(context).colorScheme.primary,
                             fontWeight: FontWeight.bold,
